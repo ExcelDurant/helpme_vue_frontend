@@ -1,28 +1,17 @@
-// export default {
-//     namespaced: true,
-//     state: {
-//       title: ''
-//     },
-//     mutations: {
-//       setName(state: { title: string }, newTitle: string) {
-//         state.title = newTitle
-//       }
-//     },
-//     actions: {
-//       updateName(context: { commit: (arg0: string, arg1: any) => void }, newTitle: string) {
-//         context.commit('setName', newTitle)
-//       }
-//     }
-//   }
-
 import { reactive } from "vue";
 
-export const navbarTitle = {
+export const navbarState = {
   state: reactive({
-    title:''
+    title:'',
+    showAuth:true
   }),
-  addNumber(newTitle:string) {
+  changeTitle(newTitle:string) {
     this.state.title = newTitle;
+    console.log(this.state.title)
+  },
+  changeAuth(authState:boolean) {
+    this.state.showAuth = authState;
+    console.log(this.state.showAuth)
   }
 };
 

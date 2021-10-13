@@ -1,10 +1,10 @@
 <template>
     <header class="header">
         <nav class="navbar">
-            <h1 class="logo">HelpMe {{title}}</h1>
+            <h1 class="logo"><router-link to="/" class="logo-link">HelpMe</router-link>{{navState.title}}</h1>
             <ul class="navlist">
-                <li><a href="#" class="navlink">login</a></li>
-                <li><a href="#" class="navlink">signup</a></li>
+                <li v-show="navState.showAuth"><router-link to="/login" class="navlink">login</router-link></li>
+                <li v-if="navState.showAuth"><router-link to="/login" class="navlink">signup</router-link></li>
             </ul>
         </nav>
     </header>
@@ -13,12 +13,17 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import { defineComponent } from 'vue'
-import{ navbarTitle }from "@/store/modules/navbar"
+import{ navbarState }from "@/store/modules/navbar"
 
-export default class Navbar extends Vue {
-    private title:string = navbarTitle.state.title; 
-    
-}
+// @Options({})
+export default defineComponent({
+    data() {
+        return {
+            navState:navbarState.state
+        }
+    }
+
+})
 </script>
 
 
@@ -28,7 +33,7 @@ export default class Navbar extends Vue {
         width: 100%;
         min-height: 40px;
         background-color: white;
-        box-shadow: 0 8px 2px 0 #dcdcdccb;
+        box-shadow: 0 2px 2px 0 #dcdcdccb;
         z-index: 100;
     }
 
@@ -43,6 +48,10 @@ export default class Navbar extends Vue {
 
     .logo {
         font-weight: 400;
+        color: black;
+        .logo-link {
+            color: black;
+        }
     }
 
     .navlist {
@@ -56,6 +65,12 @@ export default class Navbar extends Vue {
             border: $blue-border;
             margin-left: 8px;
             border-radius: 20px;
+            transition: 1s background-color, 1s color;
+
+            &:hover {
+                background-color: $blue;
+                color: white;
+            }
         }
     }
 </style>

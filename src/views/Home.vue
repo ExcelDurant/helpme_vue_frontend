@@ -5,7 +5,8 @@
         <div class="text-container">
           <h2 class="title">Create a Task and Get Help</h2>
           <p class="txt">
-            Welcome to the help centric platform. Be a helper and sell your services or ask for help from those selling their services
+            Welcome to the help centric platform. Be a helper and sell your
+            services or ask for help from those selling their services
           </p>
           <div class="links-container">
             <a href="#" class="home-link">Ask For Help</a>
@@ -18,8 +19,9 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { Options, Vue } from "vue-class-component";
+import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { navbarState } from "@/store/modules/navbar";
 
 @Options({
   components: {
@@ -27,22 +29,24 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
   },
 })
 export default class Home extends Vue {
-
-  private counter:number = 10;
-  private message:string = 'Welcome to this awesome app';
+  private counter: number = 10;
+  private message: string = "Welcome to this awesome app";
 
   public increment() {
-    this.counter++
+    this.counter++;
   }
   data() {
-    return {count:0}
+    return { count: 0 };
   }
-  
+  mounted() {
+    navbarState.changeAuth(true);
+    navbarState.changeTitle("");
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/_variables.scss';
+@import "@/styles/_variables.scss";
 .home {
   width: 100%;
   height: 91.5vh;
@@ -52,7 +56,7 @@ export default class Home extends Vue {
 .map-container {
   width: 100%;
   height: 100%;
-  background: url('../assets/map.png');
+  background: url("../assets/map.png");
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -77,6 +81,7 @@ export default class Home extends Vue {
       .title {
         font-size: 29px;
         margin-bottom: 5px;
+        font-weight: 600;
       }
       .txt {
         font-size: 15px;
@@ -95,12 +100,17 @@ export default class Home extends Vue {
           border: $blue-border;
           border-radius: 35px;
           font-weight: 500;
+          transition: 1s background-color, 1s color;
         }
       }
 
       .links-container > .home-link {
         background-color: $blue;
         color: white;
+        &:hover {
+          background-color: $deepBlue;
+          color: white;
+        }
       }
       .links-container > .home-link ~ .home-link {
         background-color: white;

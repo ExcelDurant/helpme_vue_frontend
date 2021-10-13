@@ -1,10 +1,5 @@
 <template>
   <NavBar />
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/trial">Trial</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
   <main class="page">
     <router-view />
   </main>
