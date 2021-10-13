@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <nav class="navbar">
-            <h1 class="logo">HelpMe</h1>
+            <h1 class="logo">HelpMe {{title}}</h1>
             <ul class="navlist">
                 <li><a href="#" class="navlink">login</a></li>
                 <li><a href="#" class="navlink">signup</a></li>
@@ -12,9 +12,12 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import { defineComponent } from 'vue'
+import{ navbarTitle }from "@/store/modules/navbar"
 
 export default class Navbar extends Vue {
-
+    private title:string = navbarTitle.state.title; 
+    
 }
 </script>
 
