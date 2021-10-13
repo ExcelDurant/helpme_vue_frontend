@@ -4,7 +4,7 @@
             <h1 class="logo"><router-link to="/" class="logo-link">HelpMe</router-link>{{navState.title}}</h1>
             <ul class="navlist">
                 <li v-show="navState.showAuth"><router-link to="/login" class="navlink">login</router-link></li>
-                <li v-if="navState.showAuth"><router-link to="/login" class="navlink">signup</router-link></li>
+                <li v-if="navState.showAuth"><router-link to="/signup" class="navlink">signup</router-link></li>
             </ul>
         </nav>
     </header>
@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import { defineComponent } from 'vue'
-import{ navbarState }from "@/store/modules/navbar"
+import{ navbarState }from "@/services/navbar"
 
 // @Options({})
 export default defineComponent({

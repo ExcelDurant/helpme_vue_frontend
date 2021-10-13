@@ -21,7 +21,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-import { navbarState } from "@/store/modules/navbar";
+import { navbarState } from "@/services/navbar";
 
 @Options({
   components: {
@@ -29,14 +29,8 @@ import { navbarState } from "@/store/modules/navbar";
   },
 })
 export default class Home extends Vue {
-  private counter: number = 10;
-  private message: string = "Welcome to this awesome app";
-
-  public increment() {
-    this.counter++;
-  }
   data() {
-    return { count: 0 };
+    return { msg: "" };
   }
   mounted() {
     navbarState.changeAuth(true);

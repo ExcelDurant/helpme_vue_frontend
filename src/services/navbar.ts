@@ -2,8 +2,8 @@ import { reactive } from "vue";
 
 export const navbarState = {
   state: reactive({
-    title:'',
-    showAuth:true
+    title:'' as string,
+    showAuth:true as boolean
   }),
   changeTitle(newTitle:string) {
     this.state.title = newTitle;
