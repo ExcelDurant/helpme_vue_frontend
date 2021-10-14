@@ -65,7 +65,7 @@ export default class Home extends Vue {
     .text-container {
       width: 45%;
       border-radius: 35px;
-      padding: 18px 100px;
+      padding: 15px 100px;
       background-color: rgba(255, 255, 255, 0.849);
       display: flex;
       flex-direction: column;
@@ -90,7 +90,7 @@ export default class Home extends Vue {
 
         .home-link {
           width: 160px;
-          padding: 6px 0;
+          padding: 5px 0;
           border: $blue-border;
           border-radius: 35px;
           font-weight: 500;
