@@ -31,7 +31,7 @@ export default defineComponent({
 @import '@/styles/_variables.scss';
     .header {
         width: 100%;
-        min-height: 40px;
+        min-height: 5vh;
         background-color: white;
         box-shadow: 0 2px 2px 0 #dcdcdccb;
         z-index: 100;
