@@ -15,4 +15,7 @@ export interface User {
     job:string;
     languages:string[];
     skills:string[];
+    reviews_number:number;
+    average_reviews:number;
+    photoUrl:string;
 }

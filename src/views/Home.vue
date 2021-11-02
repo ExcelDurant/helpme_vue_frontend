@@ -9,7 +9,7 @@
             services or ask for help from those selling their services
           </p>
           <div class="links-container">
-            <a href="#" class="home-link">Ask For Help</a>
+            <router-link to="/ask-for-help" class="home-link">Ask For Help</router-link>
             <a href="#" class="home-link">Offer Help</a>
           </div>
         </div>
