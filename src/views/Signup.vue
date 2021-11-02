@@ -81,6 +81,7 @@ import { Options, Vue } from "vue-class-component";
 import { defineComponent } from "vue";
 import { navbarState } from "@/services/navbar";
 import { userState } from "@/services/user";
+import {tokenState } from "@/services/token";
 
 export default defineComponent({
   mounted() {
@@ -117,6 +118,9 @@ export default defineComponent({
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
+          userState.setUser(data.user);
+          userState.setAuth(true);
+          tokenState.setToken(data.access_token);
         })
         .catch((err) => {
           console.error(err);

@@ -1,17 +1,30 @@
 <template>
   <h1 class="title">Login</h1>
   <div class="form-container">
-    <form action="" class="login-form">
-      <input type="email" name="email" id="" placeholder="email" class="in" />
+    <form action="" class="login-form" @submit.prevent="login">
+      <input
+        type="email"
+        name="email"
+        id=""
+        placeholder="email"
+        class="in"
+        v-model="email"
+        required
+      />
       <input
         type="password"
         name="password"
         id=""
         placeholder="password"
         class="in"
+        v-model="password"
+        required
       />
       <input type="submit" value="login" class="login-btn" />
-      <p class="login-txt">do not have an account? <router-link to="/signup" class="link">signup</router-link></p>
+      <p class="login-txt">
+        do not have an account?
+        <router-link to="/signup" class="link">signup</router-link>
+      </p>
     </form>
   </div>
 </template>
@@ -19,14 +32,52 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { navbarState } from "@/services/navbar";
+import { defineComponent } from "vue";
+import { userState } from "@/services/user";
+import { tokenState } from "@/services/token";
 
-export default class Login extends Vue {
+export default defineComponent({
   mounted() {
     console.log("mounted");
     navbarState.changeAuth(false);
     navbarState.changeTitle(" - Login");
-  }
-}
+  },
+
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    login() {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.email,
+          password: this.password,
+        }),
+      };
+      fetch("http://localhost:3000/auth/login", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode > 299) {
+            window.alert("wrong credentials");
+            console.log(data)
+          } else {
+            console.log(data);
+            userState.setAuth(true);
+            tokenState.setToken(data.access_token);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
