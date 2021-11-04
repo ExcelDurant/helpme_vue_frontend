@@ -2,6 +2,8 @@ $blue:#143BA0;
 $slightBlue:#3056b8;
 $deepBlue:#021c5f;
 $gray:#4F4F4F;
+$green:#007D14;
+$yellow:#E3CF17;
 $lightGray:#D9D9D9;
 $blue-border: 1px solid $blue;
 $black-border: 1px solid black;
@@ -19,4 +21,12 @@ $black-border: 1px solid black;
 .full-img {
     width: 100%;
     height: 100%;
+}
+
+.no-overflow {
+    overflow: hidden;
+}
+
+i {
+    display: inline-block;
 }

@@ -31,16 +31,18 @@ export default defineComponent({
 @import '@/styles/_variables.scss';
     .header {
         width: 100%;
-        min-height: 5vh;
+        height: 10vh;
         background-color: white;
         box-shadow: 0 2px 2px 0 #dcdcdccb;
         z-index: 100;
+        display: flex;
+        align-items: center;
     }
 
     .navbar {
         width: 90%;
         margin: 0 auto;
-        padding: 8px 0;
+        // padding: 8px 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -48,6 +50,7 @@ export default defineComponent({
 
     .logo {
         font-weight: 400;
+        font-size: 25px;
         color: black;
         .logo-link {
             color: black;
@@ -56,9 +59,11 @@ export default defineComponent({
 
     .navlist {
         display: flex;
+        align-items: center;
 
         .navlink {
             padding: 2px 0;
+            margin-top: 15px;
             // font-size: 20px;
             width: 120px;
             color: $blue;
