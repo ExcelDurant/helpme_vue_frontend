@@ -41,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/create-task',
     name: 'CreateTask',
     component: () => import('../views/CreateTask.vue')
+  },
+  {
+    path: '/my-tasks',
+    name: 'MyTasks',
+    component: () => import('../views/MyTasks.vue')
   }
 ]
 

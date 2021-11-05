@@ -1,6 +1,6 @@
 <template>
   <div class="buttons-container">
-    <router-link to="/" class="tasks-link" data-bs-toggle="tooltip" title="Tooltip on top">
+    <router-link to="/my-tasks" class="tasks-link" data-bs-toggle="tooltip" title="Tooltip on top">
       <!-- <span class="tooltiptext">Tooltip text</span> -->
       <div class="floating-content">
         <i class="fas fa-tasks"></i>
