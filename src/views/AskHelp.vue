@@ -36,87 +36,11 @@
   <section class="helpers-sec">
     <h2 class="title">helpers found:</h2>
     <div class="helpers-container">
-      <div class="helper-card">
-        <div class="img-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLqfekg_kitC_QJ5kgBUTh2tt5EIcxEnQDQ&usqp=CAU" alt="" class="full-img">
-        </div>
-        <div class="info-container">
-          <h4 class="name">John Doe</h4>
-          <h6 class="reviews"><i class="fas fa-star"></i>4.1/5 (20 reviews)</h6>
-          <h5 class="location"><i class="fas fa-map-marker"></i>Logpom, Douala, Cameroon</h5>
-          <h5 class="lang"><i class="fas fa-language"></i>English, French</h5>
-          <a href="#" class="details">view details</a>
-        </div>
-        <div class="actions-container">
-          <div class="verified-container">
-            <h6 class="verified-txt"><i class="fas fa-check-circle"></i>verified</h6>
-          </div>
-          <button class="select-btn">
-            select helper
-          </button>
-
-        </div>
-      </div>
-       <div class="helper-card">
-        <div class="img-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLqfekg_kitC_QJ5kgBUTh2tt5EIcxEnQDQ&usqp=CAU" alt="" class="full-img">
-        </div>
-        <div class="info-container">
-          <h4 class="name">John Doe</h4>
-          <h6 class="reviews"><i class="fas fa-star"></i>4.1/5 (20 reviews)</h6>
-          <h5 class="location"><i class="fas fa-map-marker"></i>Logpom, Douala, Cameroon</h5>
-          <h5 class="lang"><i class="fas fa-language"></i>English, French</h5>
-          <a href="#" class="details">view details</a>
-        </div>
-        <div class="actions-container">
-          <div class="verified-container">
-            <h6 class="verified-txt"><i class="fas fa-check-circle"></i>verified</h6>
-          </div>
-          <button class="select-btn">
-            select helper
-          </button>
-        </div>
-      </div>
-       <div class="helper-card">
-        <div class="img-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLqfekg_kitC_QJ5kgBUTh2tt5EIcxEnQDQ&usqp=CAU" alt="" class="full-img">
-        </div>
-        <div class="info-container">
-          <h4 class="name">John Doe</h4>
-          <h6 class="reviews"><i class="fas fa-star"></i>4.1/5 (20 reviews)</h6>
-          <h5 class="location"><i class="fas fa-map-marker"></i>Logpom, Douala, Cameroon</h5>
-          <h5 class="lang"><i class="fas fa-language"></i>English, French</h5>
-          <a href="#" class="details">view details</a>
-        </div>
-        <div class="actions-container">
-          <div class="verified-container">
-            <h6 class="verified-txt"><i class="fas fa-check-circle"></i>verified</h6>
-          </div>
-          <button class="select-btn">
-            select helper
-          </button>
-        </div>
-      </div>
-       <div class="helper-card">
-        <div class="img-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLqfekg_kitC_QJ5kgBUTh2tt5EIcxEnQDQ&usqp=CAU" alt="" class="full-img">
-        </div>
-        <div class="info-container">
-          <h4 class="name">John Doe</h4>
-          <h6 class="reviews"><i class="fas fa-star"></i>4.1/5 (20 reviews)</h6>
-          <h5 class="location"><i class="fas fa-map-marker"></i>Logpom, Douala, Cameroon</h5>
-          <h5 class="lang"><i class="fas fa-language"></i>English, French</h5>
-          <a href="#" class="details">view details</a>
-        </div>
-        <div class="actions-container">
-          <div class="verified-container">
-            <h6 class="verified-txt"><i class="fas fa-check-circle"></i>verified</h6>
-          </div>
-          <button class="select-btn">
-            select helper
-          </button>
-        </div>
-      </div>
+      <helper-card></helper-card>
+      <helper-card></helper-card>
+      <helper-card></helper-card>
+      <helper-card></helper-card>
+      <helper-card></helper-card>
     </div>
   </section>
   <floating-buttons></floating-buttons>
@@ -128,9 +52,10 @@ import { User } from "interfaces/user.interface";
 import { defineComponent } from "vue";
 import { Options, Vue } from "vue-class-component";
 import FloatingButtons from "@/components/FloatingButtons.vue"; 
+import HelperCard from "@/components/HelperCard.vue"; 
 
 export default defineComponent({
-  components: { FloatingButtons },
+  components: { FloatingButtons, HelperCard },
   mounted() {
     navbarState.changeTitle(" - Find a Helper");
     navbarState.changeAuth(false);

@@ -36,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/ask-for-help',
     name: 'AskHelp',
     component: () => import('../views/AskHelp.vue')
+  },
+  {
+    path: '/create-task',
+    name: 'CreateTask',
+    component: () => import('../views/CreateTask.vue')
   }
 ]
 
