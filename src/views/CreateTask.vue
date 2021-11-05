@@ -103,9 +103,11 @@
             placeholder="Coordinates"
             aria-label="Coordinates"
             aria-describedby="basic-addon2"
+            :value="'latitude: '+coordinates.latitude + ', longitude: '+ coordinates.longitude"
             readonly
           />
           <span class="input-group-text" id="basic-addon2"
+          @click="findCoordinates"
             >locate me<i class="fas fa-location-arrow"></i
           ></span>
         </div>
@@ -158,6 +160,25 @@ export default defineComponent({
     // this.getHelpers();
   },
   setup() {},
+  data() {
+      return {
+          coordinates: {
+              latitude:0,
+              longitude:0
+          }
+      }
+  },
+  methods: {
+    findCoordinates() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      }
+    },
+    showPosition(position:any) {
+        this.coordinates.latitude = position.coords.latitude;
+        this.coordinates.longitude = position.coords.longitude;
+    }
+  },
 });
 </script>
 
@@ -303,14 +324,14 @@ export default defineComponent({
       }
     }
   }
-    .submit-btn {
-      background-color: $blue;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      padding: 5px 0;
-      width: 180px;
-      align-self: center;
+  .submit-btn {
+    background-color: $blue;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 5px 0;
+    width: 180px;
+    align-self: center;
   }
 }
 </style>
