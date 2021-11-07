@@ -39,10 +39,10 @@
                 <button class="edit-btn btn">edit<i class="fas fa-edit"></i></button>
             <button class="delete-btn btn">delete<i class="fas fa-trash-alt"></i></button>
             </div>
-            <div class="proposals-container flex-center">
+            <router-link to="/proposals" class="proposals-container flex-center">
                 <h5 class="proposals-txt">view proposals</h5>
                 <h6 class="proposals-num">5</h6>
-            </div>
+            </router-link>
         </div>
     </div>
 </template>
