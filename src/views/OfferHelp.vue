@@ -29,6 +29,9 @@
     <section class="tasks-sec">
         <div class="tasks-container">
             <task-card></task-card>
+            <task-card></task-card>
+            <task-card></task-card>
+            <task-card></task-card>
         </div>
     </section>
 </template>
@@ -92,7 +95,15 @@ export default defineComponent({
   }
 } 
 
-.language-select-container {
-  width: 200px;
+.tasks-sec {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.tasks-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 </style>
