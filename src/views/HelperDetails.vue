@@ -33,8 +33,15 @@
       </section>
       <div class="divider"></div>
       <section class="details-txt-sec">
-        <div class="details-txt-container"></div>
+        <div class="details-txt-container">
+            <h4 class="category-title">category</h4>
+            <p class="desc">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi cumque ab atque ad rerum eius architecto temporibus magni quisquam ipsam! Repudiandae incidunt dicta, eos, consequuntur ratione aut ullam et amet placeat corrupti enim vitae eaque suscipit adipisci laudantium aperiam non reprehenderit libero. Fuga sed ad repudiandae 
+                minus fugiat dolorum accusantium distinctio asperiores, dignissimos repellat necessitatibus in. Nemo inventore labore tenetur velit hic expedita enim cum modi.
+            </p>
+        </div>
       </section>
+      <div class="divider"></div>
       <section class="work-sec">
         <div class="work-container"></div>
       </section>
@@ -62,6 +69,78 @@
               </div>
               <div class="percentage">87%</div>
             </div>
+            <div class="rating-container">
+              <h5 class="stars">5 stars</h5>
+              <div class="progress-bar-container">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuenow="70"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width: 70%"
+                  >
+                    <span class="sr-only">70% Complete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="percentage">87%</div>
+            </div>
+            <div class="rating-container">
+              <h5 class="stars">5 stars</h5>
+              <div class="progress-bar-container">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuenow="70"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width: 70%"
+                  >
+                    <span class="sr-only">70% Complete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="percentage">87%</div>
+            </div>
+            <div class="rating-container">
+              <h5 class="stars">5 stars</h5>
+              <div class="progress-bar-container">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuenow="70"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width: 70%"
+                  >
+                    <span class="sr-only">70% Complete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="percentage">87%</div>
+            </div>
+            <div class="rating-container">
+              <h5 class="stars">5 stars</h5>
+              <div class="progress-bar-container">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuenow="70"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="width: 70%"
+                  >
+                    <span class="sr-only">70% Complete</span>
+                  </div>
+                </div>
+              </div>
+              <div class="percentage">87%</div>
+            </div>
           </div>
         </div>
         <div class="feedback-container">
@@ -70,7 +149,39 @@
             <h5 class="task-price">30000 FCFA</h5>
           </div>
           <div class="rating-row">
-            <div class="stars-container"></div>
+            <div class="stars-container">
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+            </div>
+            <h6 class="stars">5.0</h6>
+            <h6 class="date">Jan 5 2020</h6>
+          </div>
+          <div class="desc-container">
+            <p class="desc">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+              itaque consequuntur soluta ad rem reprehenderit optio dolore,
+              dicta voluptate? Placeat possimus fuga, officiis nesciunt, sunt
+              laborum voluptatum voluptas sint molestias architecto quis nobis?
+              Soluta, labore quia.
+            </p>
+          </div>
+        </div>
+        <div class="feedback-container">
+          <div class="top-row">
+            <h4 class="task-name">Help me repair my chair</h4>
+            <h5 class="task-price">30000 FCFA</h5>
+          </div>
+          <div class="rating-row">
+            <div class="stars-container">
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+                <i class="fas fa-star yellow-icon-bg"></i>
+            </div>
             <h6 class="stars">5.0</h6>
             <h6 class="date">Jan 5 2020</h6>
           </div>
@@ -128,7 +239,7 @@ export default defineComponent({
 .main-info-sec {
   display: inline-block;
   margin-bottom: 20px;
-  border: 1px solid black;
+  width: 100%;
 }
 .main-info-container {
   display: flex;
@@ -155,13 +266,14 @@ export default defineComponent({
   .reviews {
     font-weight: 300;
     color: $gray;
+    font-size: 12px;
     i {
       color: $yellow;
     }
   }
   .location {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     i {
       color: $blue;
     }
@@ -189,5 +301,96 @@ export default defineComponent({
       }
     }
   }
+}
+
+.details-txt-sec {
+    width: 100%;
+    margin: 30px 0;
+}
+.details-txt-container {
+    width: 100%;
+    .category-title {
+        text-align: left;
+    }
+    .desc {
+        text-align: left;
+        font-size: 15px;
+        font-weight: 300;
+    }
+}
+
+.history-sec {
+    width: 100%;
+}
+
+.ratings-container {
+    width: 80%;
+    margin-bottom: 20px;
+    .title {
+        text-align: left;
+        font-size: 25px;
+        font-weight: 400;
+    }
+}
+
+.rating-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .stars,.percentage {
+        font-size: 13px;
+    }
+    .progress-bar-container {
+        width: 70%;
+        .progress-bar {
+            background-color: $yellow;
+        }
+    }
+}
+
+.feedback-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    .top-row {
+        display: flex;
+        justify-content: space-between;
+        .task-name,.task-price {
+            font-size: 18px;
+        }
+        .task-name {
+            font-weight: 600;
+        }
+    }
+    .rating-row {
+        align-self: flex-start;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .stars-container {
+        margin-right: 10px;
+    }
+    .stars,.date {
+        margin: 0;
+        padding: 0;
+    }
+    .stars {
+        margin-right: 5px;
+    }
+    .date {
+        font-size: 12px;
+        color: $gray;
+    }
+    .desc-container {
+        .desc {
+            text-align: left;
+            font-size: 13px;
+        }
+    }
 }
 </style>
