@@ -8,7 +8,7 @@
           <h6 class="reviews"><i class="fas fa-star"></i>4.1/5 (20 reviews)</h6>
           <h5 class="location"><i class="fas fa-map-marker"></i>Logpom, Douala, Cameroon</h5>
           <h5 class="lang"><i class="fas fa-language"></i>English, French</h5>
-          <a href="#" class="details">view details</a>
+          <router-link to="/helper-details" href="#" class="details">view details</router-link>
         </div>
         <div class="actions-container">
           <div class="verified-container">

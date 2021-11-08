@@ -10,7 +10,7 @@
           </p>
           <div class="links-container">
             <router-link to="/ask-for-help" class="home-link">Ask For Help</router-link>
-            <a href="#" class="home-link">Offer Help</a>
+            <router-link to="/offer-help" class="home-link">Offer Help</router-link>
           </div>
         </div>
       </div>

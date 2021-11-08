@@ -38,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/AskHelp.vue')
   },
   {
+    path: '/helper-details',
+    name: 'HelperDetails',
+    component: () => import('../views/HelperDetails.vue')
+  },
+  {
     path: '/create-task',
     name: 'CreateTask',
     component: () => import('../views/CreateTask.vue')
@@ -51,6 +56,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/proposals',
     name: 'Proposals',
     component: () => import('../views/Proposals.vue')
+  },
+  {
+    path: '/offer-help',
+    name: 'OfferHelp',
+    component: () => import('../views/OfferHelp.vue')
   }
 ]
 
