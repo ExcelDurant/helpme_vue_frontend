@@ -61,6 +61,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/offer-help',
     name: 'OfferHelp',
     component: () => import('../views/OfferHelp.vue')
+  },
+  {
+    path: '/become-helper',
+    name: 'BecomeHelper',
+    component: () => import('../views/BecomeHelper1.vue')
+  },
+  {
+    path: '/become-helper-final',
+    name: 'BecomeHelper2',
+    component: () => import('../views/BecomeHelper2.vue')
   }
 ]
 
