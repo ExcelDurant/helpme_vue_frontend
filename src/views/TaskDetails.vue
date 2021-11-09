@@ -51,7 +51,7 @@
             </h5>
             <h3 class="creator">by <span class="creator-name">John Doe</span></h3>
             <h6 class="created-on">created 2 hours ago</h6>
-            <button class="help-btn">offer help</button>
+            <button @click.prevent="offerHelp()" class="help-btn">offer help</button>
         </div>
       </div>
     </div>
@@ -70,6 +70,11 @@ export default defineComponent({
     setup() {
         
     },
+    methods:{
+      offerHelp() {
+        this.$router.push('/chat');
+      }
+    }
 })
 </script>
 
