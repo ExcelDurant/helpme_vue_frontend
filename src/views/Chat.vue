@@ -62,6 +62,7 @@
             <button class="offer-btn">offer task</button>
             <button class="start-btn">mark as started</button>
             <button class="reject-btn">reject helper</button>
+            <button @click.prevent="giveFeedback()" class="completed-btn">mark as completed</button>
           </div>
          
         </div>
@@ -168,6 +169,11 @@ export default defineComponent({
     setup() {
         
     },
+    methods:{
+      giveFeedback() {
+        this.$router.push('/feedback');
+      }
+    }
 })
 </script>
 
@@ -260,17 +266,21 @@ export default defineComponent({
   }
   .buttons-container {
     button {
-      width: 130px;
-      padding: 3px 0;
+      padding: 3px 20px;
       border-radius: 10px;
       font-size: 13px;
       margin-right: 10px;
     }
     .offer-btn {
       background-color: $gray;
+      color: white;
     }
     .reject-btn {
       background-color: $lightred;
+      color: white;
+    }
+    .completed-btn {
+      background-color: $green;
       color: white;
     }
   }
