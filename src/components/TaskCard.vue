@@ -25,7 +25,7 @@
             <h5 class="location"><i class="fas fa-map-marker blue-icon-bg"></i>Logpom, Douala, Cameroon</h5>
             <h6 class="date">created 2 hours ago</h6>
         </div>
-        <a href="#" class="details-link">view details</a>
+        <router-link to="/task-details" href="#" class="details-link">view details</router-link>
     </div>
         </div>
 </template>

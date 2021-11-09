@@ -71,6 +71,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/become-helper-final',
     name: 'BecomeHelper2',
     component: () => import('../views/BecomeHelper2.vue')
+  },
+  {
+    path: '/task-details',
+    name: 'TaskDetails',
+    component: () => import('../views/TaskDetails.vue')
   }
 ]
 

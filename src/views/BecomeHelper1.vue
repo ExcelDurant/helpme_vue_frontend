@@ -27,7 +27,7 @@
   <input type="tel" class="form-control" id="floatingInputSecondPhone" placeholder="656000000">
   <label for="floatingInputSecondPhone">Second Phone Number</label>
 </div>
-<button @click="nextPage()" class="save-btn">Save & Continue</button>
+<button @click.prevent="nextPage()" class="save-btn">Save & Continue</button>
           </form>
         </div>
       </div>
@@ -55,11 +55,9 @@ export default defineComponent({
         
     },
     methods: {
-      async nextPage() {
+      nextPage() {
         console.log('navigating');
-       let page = await this.$router.resolve('/become-helper-final');
-      //  this.$router.push(page.fullPath);
-      console.log(page);
+       this.$router.push('/become-helper-final');
       }
     }
 })

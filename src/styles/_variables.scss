@@ -50,6 +50,25 @@ button {
     justify-content: space-between;
 }
 
+.flex-justify-down {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .auto-marg {
     margin: 0 auto;
+}
+
+.reward-container {
+    padding: 0px 10px;
+    height: 30px;
+    background-color: $blue;
+    border-radius: 10px;
+    .reward {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        color: white;
+    }
 }
