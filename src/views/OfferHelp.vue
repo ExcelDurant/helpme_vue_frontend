@@ -27,11 +27,9 @@
     </div>
   </div>
     <section class="tasks-sec">
+      <basic-loader v-if="showLoader"></basic-loader>
         <div class="tasks-container">
-            <task-card></task-card>
-            <task-card></task-card>
-            <task-card></task-card>
-            <task-card></task-card>
+            <task-card v-for="task in tasks" :key="task.id" :task="task"></task-card>
         </div>
     </section>
 </template>
@@ -41,13 +39,16 @@ import { navbarState } from '@/services/navbar';
 import { defineComponent, toRefs } from 'vue';
 import TaskCard from '@/components/TaskCard.vue';
 import { userState } from '@/services/user';
+import { tokenState } from '@/services/token';
+import { Task } from '../../interfaces/task.interface';
+import BasicLoader from "@/components/BasicLoader.vue";
 
 export default defineComponent({
-    components: {TaskCard},
+    components: {TaskCard,BasicLoader},
     mounted() {
     navbarState.changeTitle(" - Offer Help");
     navbarState.changeAuth(false);
-    this.getUser();
+    this.getTasks();
   },
     setup() {
       let { user } = toRefs(userState.state);
@@ -55,16 +56,44 @@ export default defineComponent({
           user
       }
   },
+  data() {
+        return {
+            tokenState:tokenState.state,
+            showLoader:false,
+            tasks:[] as Task[]
+        }
+    },
   methods: {
-    async getUser() {
-      await userState.fetchUser();
-      if(!this.user.is_helper) {
-        window.alert("you are not a helper");
-        this.$router.push('/become-helper');
-    }
+    getTasks() {
+            this.showLoader = true;
+      const requestOptions = {
+        method: "GET",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.tokenState.token}`
+         },
+      };
+      fetch("https://pure-archive-330723.uc.r.appspot.com/tasks/retrieve", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode > 299) {
+            this.showLoader = false;
+            window.alert("wrong credentials");
+            console.log(data)
+          } else {
+            this.showLoader = false;
+            this.tasks = data;
+            console.log(data);
+          }
+        })
+        .catch((err) => {
+          this.showLoader = false;
+          console.error(err);
+        });
+    },
     },
   },
-})
+)
 </script>
 
 <style lang="scss" scoped>
@@ -117,6 +146,5 @@ export default defineComponent({
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 </style>

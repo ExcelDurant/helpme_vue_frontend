@@ -19,7 +19,7 @@
         </div>
         <div class="imgs-container">
             <div class="img-container no-overflow" v-for="(img, index) in task.pictures" :key="index">
-                <img :src="img" alt="" class="full-img">
+                <img :src="img" :alt="task.name" class="full-img">
             </div>
         </div>
         <div class="actions-container">
@@ -36,8 +36,8 @@
 </template>
 
 <script lang="ts">
-import { Task } from 'interfaces/task.interface'
-import { defineComponent } from 'vue'
+import { Task } from 'interfaces/task.interface';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     props:{
