@@ -1,66 +1,138 @@
 <template>
-    <div class="become-helper-page">
-      <div class="page form-page">
-        <div class="form-container">
-          <h2 class="title">personal information</h2>
-          <form action="" class="helper-form">
-            <div class="form-floating mb-3">
-  <input type="date" class="form-control" id="floatingInput">
-  <label for="floatingInput">date of birth</label>
-</div>
-<div class="form-floating">
-  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-    <option selected>Select Country</option>
-    <option value="1">Cameroon</option>
-  </select>
-  <label for="floatingSelect">Country</label>
-</div>
-<div class="form-floating mb-3">
-  <input type="text" class="form-control" id="floatingInputCity" placeholder="Douala">
-  <label for="floatingInputCity">City</label>
-</div>
-<div class="form-floating mb-3">
-  <input type="text" class="form-control" id="floatingInputStreet" placeholder="Logpom">
-  <label for="floatingInputStreet">City</label>
-</div>
-<div class="form-floating mb-3">
-  <input type="tel" class="form-control" id="floatingInputSecondPhone" placeholder="656000000">
-  <label for="floatingInputSecondPhone">Second Phone Number</label>
-</div>
-<button @click.prevent="nextPage()" class="save-btn">Save & Continue</button>
-          </form>
-        </div>
+  <div class="become-helper-page">
+    <div class="page form-page">
+      <basic-loader v-if="showLoader"></basic-loader>
+      <div class="form-container">
+        <h2 class="title">personal information</h2>
+        <form action="" class="helper-form" @submit.prevent="nextPage()">
+          <div class="form-floating mb-3">
+            <input
+              type="date"
+              class="form-control"
+              id="floatingInput"
+              v-model="user.birthday"
+              required
+            />
+            <label for="floatingInput">date of birth</label>
+          </div>
+          <div class="form-floating">
+            <select
+              class="form-select"
+              id="floatingSelect"
+              aria-label="Floating label select example"
+              v-model="user.country"
+              required
+            >
+              <option selected>Select Country</option>
+              <option value="Cameroon">Cameroon</option>
+            </select>
+            <label for="floatingSelect">Country</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputCity"
+              placeholder="Douala"
+              v-model="user.city"
+              required
+            />
+            <label for="floatingInputCity">City</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputStreet"
+              placeholder="Logpom"
+              v-model="user.street"
+              required
+            />
+            <label for="floatingInputStreet">Street</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="tel"
+              class="form-control"
+              id="floatingInputSecondPhone"
+              placeholder="656000000"
+              v-model="user.sec_phone_number"
+            />
+            <label for="floatingInputSecondPhone">Second Phone Number</label>
+          </div>
+          <button class="save-btn">Save & Continue</button>
+        </form>
       </div>
-      <div class="page timeline-page flex-center">
-        <div class="timeline-container flex-center">
-          <div class="step-box step_1 flex-center"><h4 class="step-count">1</h4></div>
-          <div class="line-box"></div>
-          <div class="step-box step_2 flex-center"><h4 class="step-count">2</h4></div>
+    </div>
+    <div class="page timeline-page flex-center">
+      <div class="timeline-container flex-center">
+        <div class="step-box step_1 flex-center">
+          <h4 class="step-count">1</h4>
+        </div>
+        <div class="line-box"></div>
+        <div class="step-box step_2 flex-center">
+          <h4 class="step-count">2</h4>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { navbarState } from '@/services/navbar';
-import { defineComponent } from 'vue'
+import { navbarState } from "@/services/navbar";
+import { userState } from "@/services/user";
+import { defineComponent, toRefs } from "vue";
+import BasicLoader from "@/components/BasicLoader.vue";
+import { tokenState } from "@/services/token";
 
 export default defineComponent({
-    mounted() {
+  components: { BasicLoader },
+  mounted() {
     navbarState.changeTitle(" - Become a Helper");
     navbarState.changeAuth(false);
     // this.getHelpers();
   },
-    setup() {
-        
+  setup() {
+    let { user } = toRefs(userState.state);
+    return {
+      user,
+    };
+  },
+  data() {
+    return {
+      showLoader: false,
+      tokenState: tokenState.state,
+    };
+  },
+  methods: {
+    nextPage() {
+      this.showLoader = true;
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.tokenState.token}`,
+        },
+        body: JSON.stringify(this.user),
+      };
+      fetch(
+        "https://pure-archive-330723.uc.r.appspot.com/users/update/profile",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.showLoader = false;
+          console.log(data);
+          userState.setUser(data);
+          this.$router.push("/become-helper-final");
+        })
+        .catch((err) => {
+          this.showLoader = false;
+          console.error(err);
+        });
     },
-    methods: {
-      nextPage() {
-        console.log('navigating');
-       this.$router.push('/become-helper-final');
-      }
-    }
-})
+  },
+});
 </script>
 
 <style lang="scss" scoped>

@@ -2,36 +2,24 @@
     <div class="task-container">
         <div class="info">
             <h3 class="title">
-                Help me repair my television
+                {{ task.name }}
             </h3>
             <p class="description">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit, sequi!
-                 Ea assumenda facilis aliquam! Perspiciatis possimus modi rerum, alias,
-                  saepe, labore deserunt mollitia non repellat 
-                nulla voluptates. Maxime quia sit officia commodi corrupti doloribus, incidunt distinctio.
+                {{ task.description }}
             </p>
             <div class="middle">
                 <h5 class="location">
-                <i class="fas fa-map-marker"></i>Cameroon, Douala, Logpom
+                <i class="fas fa-map-marker"></i>{{task.address.country}}, {{task.address.city}}, {{task.address.street}}
             </h5>
             <div class="reward-container flex-center">
-                <h4 class="reward">25000 FCFA</h4>
+                <h4 class="reward">{{task.reward}} FCFA</h4>
             </div>
             </div>
-            <h5 class="date"><i class="fas fa-calendar-week"></i>October 8, 2021</h5>
+            <h5 class="date"><i class="fas fa-calendar-week"></i>{{task.start_date}}</h5>
         </div>
         <div class="imgs-container">
-            <div class="img-container no-overflow">
-                <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
-            </div>
-            <div class="img-container no-overflow">
-                <img src="https://images.unsplash.com/photo-1614356192561-8f97735e56fb?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDl8Ul9GeW4tR3d0bHd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" class="full-img">
-            </div>
-            <div class="img-container no-overflow">
-                <img src="https://images.unsplash.com/photo-1616971348557-9ea6dcc14a4e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80" alt="" class="full-img">
-            </div>
-            <div class="img-container no-overflow">
-                <img src="https://images.unsplash.com/photo-1616971485739-595f5a46f299?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80" alt="" class="full-img">
+            <div class="img-container no-overflow" v-for="(img, index) in task.pictures" :key="index">
+                <img :src="img" alt="" class="full-img">
             </div>
         </div>
         <div class="actions-container">
@@ -41,11 +29,31 @@
             </div>
             <router-link to="/proposals" class="proposals-container flex-center">
                 <h5 class="proposals-txt">view proposals</h5>
-                <h6 class="proposals-num">5</h6>
+                <h6 class="proposals-num">{{ task.proposals }}</h6>
             </router-link>
         </div>
     </div>
 </template>
+
+<script lang="ts">
+import { Task } from 'interfaces/task.interface'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    props:{
+        task:{}
+    },
+    setup() {
+        
+    },
+    data() {
+        return {
+            task:this.task as Task
+        }
+    }
+})
+</script>
+
 
 <style lang="scss" scoped>
 @import "@/styles/_variables.scss";

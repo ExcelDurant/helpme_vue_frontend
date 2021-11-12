@@ -12,10 +12,16 @@ export interface User {
     country:string;
     street:string;
     description:string;
+    education: string;
+    categories: string[];
     job:string;
     languages:string[];
     skills:string[];
     reviews_number:number;
     average_reviews:number;
     photoUrl:string;
+    created_tasks: number;
+    completed_tasks: number;
+    is_verified: boolean;
+    cash: number;
 }
