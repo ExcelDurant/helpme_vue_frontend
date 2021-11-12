@@ -22,6 +22,7 @@
 import { Options, Vue } from "vue-class-component";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import { navbarState } from "@/services/navbar";
+import { userState} from "@/services/user";
 
 @Options({
   components: {
@@ -30,10 +31,15 @@ import { navbarState } from "@/services/navbar";
 })
 export default class Home extends Vue {
   data() {
-    return { msg: "" };
+    return { msg: "", userState:userState.state };
   }
   mounted() {
-    navbarState.changeAuth(true);
+    let userstate = userState.state;
+    if(userstate.loggedIn) {
+      navbarState.changeAuth(false);
+    } else {
+      navbarState.changeAuth(true);
+    }
     navbarState.changeTitle("");
   }
 }
