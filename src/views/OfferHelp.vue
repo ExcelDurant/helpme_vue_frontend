@@ -38,19 +38,32 @@
 
 <script lang="ts">
 import { navbarState } from '@/services/navbar';
-import { defineComponent } from 'vue';
+import { defineComponent, toRefs } from 'vue';
 import TaskCard from '@/components/TaskCard.vue';
+import { userState } from '@/services/user';
 
 export default defineComponent({
     components: {TaskCard},
     mounted() {
     navbarState.changeTitle(" - Offer Help");
     navbarState.changeAuth(false);
-    // this.getHelpers();
+    this.getUser();
   },
     setup() {
-        
+      let { user } = toRefs(userState.state);
+      return {
+          user
+      }
+  },
+  methods: {
+    async getUser() {
+      await userState.fetchUser();
+      if(!this.user.is_helper) {
+        window.alert("you are not a helper");
+        this.$router.push('/become-helper');
+    }
     },
+  },
 })
 </script>
 

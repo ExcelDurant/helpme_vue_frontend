@@ -114,13 +114,14 @@ export default defineComponent({
           confirm_password: this.confirm_password,
         }),
       };
-      fetch("http://localhost:3000/auth/signup", requestOptions)
+      fetch("https://pure-archive-330723.uc.r.appspot.com/auth/signup", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
           userState.setUser(data.user);
           userState.setAuth(true);
           tokenState.setToken(data.access_token);
+          this.$router.push('/welcome');
         })
         .catch((err) => {
           console.error(err);

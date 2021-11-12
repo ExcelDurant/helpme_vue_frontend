@@ -4,7 +4,7 @@
             <h1 class="logo"><router-link to="/" class="logo-link">HelpMe</router-link>{{navState.title}}</h1>
             <ul class="navlist">
                 <li v-show="navState.showAuth"><router-link to="/login" class="navlink">login</router-link></li>
-                <li v-if="navState.showAuth"><router-link to="/signup" class="navlink">signup</router-link></li>
+                <li v-if="navState.showAuth"><router-link to="/signup" class="navlink">signup</router-link></li> 
             </ul>
         </nav>
     </header>
@@ -31,7 +31,7 @@ export default defineComponent({
 @import '@/styles/_variables.scss';
     .header {
         width: 100%;
-        height: 10vh;
+        height: 60px;
         background-color: white;
         box-shadow: 0 2px 2px 0 #dcdcdccb;
         z-index: 100;
@@ -77,5 +77,9 @@ export default defineComponent({
                 color: white;
             }
         }
+       
     }
+     .dropdown {
+            position: relative;
+        }
 </style>

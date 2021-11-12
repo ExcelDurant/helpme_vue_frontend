@@ -2,6 +2,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import { tokenState } from '../services/token';
+import {  toRefs } from 'vue'
+import { userState } from '../services/user';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,7 +33,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/welcome',
     name: 'Welcome',
-    component: () => import('../views/Welcome.vue')
+    component: () => import('../views/Welcome.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/ask-for-help',
@@ -40,32 +44,38 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/helper-details',
     name: 'HelperDetails',
-    component: () => import('../views/HelperDetails.vue')
+    component: () => import('../views/HelperDetails.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/create-task',
     name: 'CreateTask',
-    component: () => import('../views/CreateTask.vue')
+    component: () => import('../views/CreateTask.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/my-tasks',
     name: 'MyTasks',
-    component: () => import('../views/MyTasks.vue')
+    component: () => import('../views/MyTasks.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/proposals',
     name: 'Proposals',
-    component: () => import('../views/Proposals.vue')
+    component: () => import('../views/Proposals.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/offer-help',
     name: 'OfferHelp',
-    component: () => import('../views/OfferHelp.vue')
+    component: () => import('../views/OfferHelp.vue'),
+    meta:{requiresAuth:true, requiresHelper:true}
   },
   {
     path: '/become-helper',
     name: 'BecomeHelper',
-    component: () => import('../views/BecomeHelper1.vue')
+    component: () => import('../views/BecomeHelper1.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/become-helper-final',
@@ -75,23 +85,53 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/task-details',
     name: 'TaskDetails',
-    component: () => import('../views/TaskDetails.vue')
+    component: () => import('../views/TaskDetails.vue'),
+    meta:{requiresAuth:true, requiresHelper:true}
   },
   {
     path: '/chat',
     name: 'Chat',
-    component: () => import('../views/Chat.vue')
+    component: () => import('../views/Chat.vue'),
+    meta:{requiresAuth:true}
   },
   {
     path: '/feedback',
     name: 'Feedback',
-    component: () => import('../views/Feedback.vue')
+    component: () => import('../views/Feedback.vue'),
+    meta:{requiresAuth:true}
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.meta.requiresAuth) {
+    let { token } = toRefs(tokenState.state);
+    if(token.value == '') {
+      console.log('unauthenticated')
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+})
+router.beforeEach((to, from, next) => {
+  if(to.meta.requiresHelper) {
+    let { user } = toRefs(userState.state);
+    if(!user.value.is_helper) {
+      console.log('not a helper')
+      next('/become-helper');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 })
 
 export default router

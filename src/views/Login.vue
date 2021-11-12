@@ -1,5 +1,6 @@
 <template>
   <h1 class="title">Login</h1>
+  <basic-loader v-if="showLoader"></basic-loader>
   <div class="form-container">
     <form action="" class="login-form" @submit.prevent="login">
       <input
@@ -35,8 +36,10 @@ import { navbarState } from "@/services/navbar";
 import { defineComponent } from "vue";
 import { userState } from "@/services/user";
 import { tokenState } from "@/services/token";
+import BasicLoader from "@/components/BasicLoader.vue";
 
 export default defineComponent({
+  components:{BasicLoader},
   mounted() {
     console.log("mounted");
     navbarState.changeAuth(false);
@@ -47,11 +50,13 @@ export default defineComponent({
     return {
       email: "",
       password: "",
+      showLoader:false
     };
   },
 
   methods: {
     login() {
+      this.showLoader = true;
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,19 +65,24 @@ export default defineComponent({
           password: this.password,
         }),
       };
-      fetch("http://localhost:3000/auth/login", requestOptions)
+      fetch("https://pure-archive-330723.uc.r.appspot.com/auth/login", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data.statusCode > 299) {
+            this.showLoader = false;
             window.alert("wrong credentials");
             console.log(data)
           } else {
+            this.showLoader = false;
             console.log(data);
             userState.setAuth(true);
             tokenState.setToken(data.access_token);
+            userState.setUser(data.user);
+            this.$router.push('/welcome');
           }
         })
         .catch((err) => {
+          this.showLoader = false;
           console.error(err);
         });
     },
