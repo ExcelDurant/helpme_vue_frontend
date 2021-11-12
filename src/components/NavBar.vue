@@ -5,6 +5,7 @@
             <ul class="navlist">
                 <li v-show="navState.showAuth"><router-link to="/login" class="navlink">login</router-link></li>
                 <li v-if="navState.showAuth"><router-link to="/signup" class="navlink">signup</router-link></li> 
+                <li v-if="userState.loggedIn" @click="logout()"><router-link to="/" class="navlink">logout</router-link></li> 
             </ul>
         </nav>
     </header>
@@ -14,12 +15,24 @@
 import { Options, Vue } from 'vue-class-component';
 import { defineComponent } from 'vue'
 import{ navbarState }from "@/services/navbar"
+import { userState } from '@/services/user';
+import { User } from 'interfaces/user.interface';
+import { tokenState } from '@/services/token';
 
 // @Options({})
 export default defineComponent({
     data() {
         return {
-            navState:navbarState.state
+            navState:navbarState.state,
+            userState:userState.state
+        }
+    },
+    methods:{
+        logout() {
+            sessionStorage.clear();
+            userState.setUser({} as User);
+            userState.setAuth(false);
+            tokenState.setToken('');
         }
     }
 

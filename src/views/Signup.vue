@@ -1,5 +1,6 @@
 <template>
   <h1 class="title">Registration</h1>
+  <basic-loader v-if="showLoader"></basic-loader>
   <div class="form-container">
     <form action="" class="signup-form" @submit.prevent="signup">
       <input
@@ -82,8 +83,10 @@ import { defineComponent } from "vue";
 import { navbarState } from "@/services/navbar";
 import { userState } from "@/services/user";
 import {tokenState } from "@/services/token";
+import BasicLoader from "@/components/BasicLoader.vue";
 
 export default defineComponent({
+  components:{BasicLoader},
   mounted() {
     navbarState.changeAuth(false);
     navbarState.changeTitle(" - Sign Up");
@@ -97,11 +100,13 @@ export default defineComponent({
       phone_number: "",
       password: "",
       confirm_password: "",
+      showLoader:false
     };
   },
   methods: {
     signup() {
       if(this.confirm_password == this.password) {
+        this.showLoader = true;
         const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -117,13 +122,14 @@ export default defineComponent({
       fetch("https://pure-archive-330723.uc.r.appspot.com/auth/signup", requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          this.showLoader = false;
           userState.setUser(data.user);
           userState.setAuth(true);
           tokenState.setToken(data.access_token);
           this.$router.push('/welcome');
         })
         .catch((err) => {
+          this.showLoader = false;
           console.error(err);
         })
       } else {

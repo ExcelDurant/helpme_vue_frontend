@@ -41,9 +41,12 @@ import BasicLoader from "@/components/BasicLoader.vue";
 export default defineComponent({
   components:{BasicLoader},
   mounted() {
-    console.log("mounted");
     navbarState.changeAuth(false);
     navbarState.changeTitle(" - Login");
+    console.log(userState.state.loggedIn);
+    if(userState.state.loggedIn) {
+      this.$router.push('/welcome');
+    }
   },
 
   data() {

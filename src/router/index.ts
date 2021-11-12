@@ -107,6 +107,7 @@ const router = createRouter({
   routes
 })
 
+// protects routes requiring authentication
 router.beforeEach((to, from, next) => {
   if(to.meta.requiresAuth) {
     let { token } = toRefs(tokenState.state);
@@ -120,6 +121,8 @@ router.beforeEach((to, from, next) => {
     next();
   }
 })
+
+// protects routes requiring being a helper
 router.beforeEach((to, from, next) => {
   if(to.meta.requiresHelper) {
     let { user } = toRefs(userState.state);
@@ -133,5 +136,20 @@ router.beforeEach((to, from, next) => {
     next();
   }
 })
+
+// protect login and signup routes when authenticated
+// router.beforeEach((to, from, next) => {
+//   if(to.path = '/login') {
+//     let { token } = toRefs(tokenState.state);
+//     let { loggedIn } = toRefs(userState.state);
+//     if(token.value == '' || !loggedIn.value) {
+//       next();
+//     } else {
+//       next('/');
+//     }
+//   } else {
+//     next();
+//   }
+// })
 
 export default router

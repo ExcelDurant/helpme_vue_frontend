@@ -36,7 +36,7 @@
   <section class="form-sec">
     <div class="form-container">
       <h2 class="title">Create a new task</h2>
-      <form action="" class="task-form">
+      <form action="" class="task-form" @submit.prevent="createTask">
         <label for="name">task name</label>
         <input
           type="text"
@@ -44,6 +44,7 @@
           id=""
           class="in name-in"
           placeholder="Repair my television"
+          v-model="name"
           required
         />
         <label for="description">description</label>
@@ -53,6 +54,7 @@
           id=""
           class="in desc-in"
           placeholder="describe your task here..."
+          v-model="description"
           required
         ></textarea>
         <label for="category">select task category</label>
@@ -60,23 +62,29 @@
           class="form-select category-select select"
           name="category"
           aria-label="Default select example"
+          v-model="category[0]"
           required
         >
           <option selected>engineer</option>
-          <option value="1">driver</option>
-          <option value="2">dress washer</option>
-          <option value="3">engineer</option>
-          <option value="4">electrician</option>
-          <option value="5">engineer</option>
+          <option value="driver">driver</option>
+          <option value="dress washer">dress washer</option>
+          <option value="engineer">engineer</option>
+          <option value="electrician">electrician</option>
+          <option value="engineer">engineer</option>
         </select>
-        <label for="country">address</label>
+        <div class="add-label-container">
+          <label for="country">Address</label>
+          <button @click="findCoordinates" class="locate-btn">locate me<i class="fas fa-location-arrow"></i
+          ></button>
+          <div v-if="mapLoader" class="lds-hourglass"></div>
+        </div>
         <input
           type="text"
           name="country"
           id=""
           class="in country-in"
           placeholder="Country"
-          value="Cameroon"
+          v-model="address.country"
           required
         />
         <input
@@ -85,6 +93,7 @@
           id=""
           class="in city-in"
           placeholder="City"
+          v-model="address.city"
           required
         />
         <input
@@ -93,9 +102,10 @@
           id=""
           class="in street-in"
           placeholder="Street"
+          v-model="address.street"
           required
         />
-        <div class="input-group in">
+        <div v-if="showCoords" class="input-group in">
           <input
             type="text"
             class="form-control in"
@@ -103,13 +113,9 @@
             placeholder="Coordinates"
             aria-label="Coordinates"
             aria-describedby="basic-addon2"
-            :value="'latitude: '+coordinates.latitude + ', longitude: '+ coordinates.longitude"
+            :value="'latitude: '+location.latitude + ', longitude: '+ location.longitude"
             readonly
           />
-          <span class="input-group-text" id="basic-addon2"
-          @click="findCoordinates"
-            >locate me<i class="fas fa-location-arrow"></i
-          ></span>
         </div>
         <label for="datetime">date and time</label>
         <input
@@ -118,6 +124,7 @@
           id=""
           class="in date-in"
           title="this task should be done on"
+          v-model="start_date"
         />
         <label for="reward">reward</label>
         <div class="input-group in">
@@ -128,6 +135,8 @@
             placeholder="20000"
             aria-label="reward"
             aria-describedby="basic-addon3"
+            v-model="reward"
+            required
           />
           <span class="input-group-text" id="basic-addon3">FCFA</span>
         </div>
@@ -151,6 +160,7 @@
 
 <script lang="ts">
 import { navbarState } from "@/services/navbar";
+import { tokenState } from "@/services/token";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -162,21 +172,112 @@ export default defineComponent({
   setup() {},
   data() {
       return {
-          coordinates: {
+        mapLoader:false,
+        showCoords:false,
+        name:'',
+        description:'',
+        category:[],
+        start_date:'',
+        reward:0,
+          location: {
               latitude:0,
               longitude:0
-          }
+          },
+          address: {
+            city:'',
+          street:'',
+          country:'',
+          },
+          pictures:[
+            "https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80",
+            "https://images.unsplash.com/photo-1614356192561-8f97735e56fb?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDl8Ul9GeW4tR3d0bHd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+            "https://images.unsplash.com/photo-1616971348557-9ea6dcc14a4e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80",
+            "https://images.unsplash.com/photo-1616971485739-595f5a46f299?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80"
+          ],
+          tokenState:tokenState.state
       }
   },
   methods: {
     findCoordinates() {
+      this.mapLoader = true;
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(this.showPosition);
       }
     },
     showPosition(position:any) {
-        this.coordinates.latitude = position.coords.latitude;
-        this.coordinates.longitude = position.coords.longitude;
+        this.location.latitude = position.coords.latitude;
+        this.location.longitude = position.coords.longitude;
+        this.locateTask(position.coords.latitude, position.coords.longitude);
+    },
+    locateTask(latitude:string, longitude:string) {
+      const requestOptions = {
+        method: "GET",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.tokenState.token}`
+         },
+        // body: JSON.stringify({
+        //   email: this.email,
+        //   password: this.password,
+        // }),
+      };
+      fetch("https://pure-archive-330723.uc.r.appspot.com/tasks/locate?"+ new URLSearchParams([['latitude', `${latitude}`], ['longitude', `${longitude}`]]), requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode > 299) {
+            this.mapLoader = false;
+            window.alert("wrong credentials");
+            console.log(data)
+          } else {
+            this.mapLoader = false;
+            this.showCoords = true;
+           this.address.street = data.street;
+           this.address.country = data.country;
+           this.address.city = data.city;
+            console.log(data);
+          }
+        })
+        .catch((err) => {
+          this.mapLoader = false;
+          console.error(err);
+        });
+    },
+    createTask() {
+      const requestOptions = {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.tokenState.token}`
+         },
+        body: JSON.stringify({
+          name:this.name,
+          description:this.description,
+          category:this.category,
+          address:this.address,
+          location:this.location,
+          start_date:this.start_date,
+          reward:this.reward,
+          pictures:this.pictures
+        }),
+      };
+      fetch("https://pure-archive-330723.uc.r.appspot.com/tasks/create", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode > 299) {
+            this.mapLoader = false;
+            window.alert("wrong credentials");
+            console.log(data)
+          } else {
+            this.mapLoader = false;
+            this.$router.push("/my-tasks")
+            console.log(data);
+          }
+        })
+        .catch((err) => {
+          this.mapLoader = false;
+          console.error(err);
+          window.alert("something happened");
+        });
     }
   },
 });
@@ -253,6 +354,55 @@ export default defineComponent({
 
   label {
     margin-bottom: 8px;
+  }
+
+  .add-label-container {
+    display: flex;
+    align-items: center;
+      .locate-btn {
+    margin-left: 10px;
+    background-color: $blue;
+    color: white;
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 3px 10px;
+    i {
+      margin-left: 5px;
+    }
+  }
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin-bottom: -4px;
+  margin-left: 10px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: inline-block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 0px;
+  box-sizing: border-box;
+  border: 12px solid $blue;
+  border-color: $blue transparent $blue transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
   }
   .in,
   select {

@@ -3,8 +3,8 @@ import { User } from '../../interfaces/user.interface';
 
 export const userState = {
     state: reactive({
-        user: JSON.parse(localStorage.getItem('user') || '{}') as User,
-        loggedIn: false as boolean
+        user: JSON.parse(sessionStorage.getItem('user') || '{}') as User,
+        loggedIn: JSON.parse(sessionStorage.getItem('loggedIn') || 'false') as boolean
     }),
     async fetchUser() {
         console.log('fetching user from state')
