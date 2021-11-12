@@ -83,7 +83,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/BecomeHelper2.vue')
   },
   {
-    path: '/task-details',
+    path: '/task-details/:id',
     name: 'TaskDetails',
     component: () => import('../views/TaskDetails.vue'),
     meta:{requiresAuth:true, requiresHelper:true}

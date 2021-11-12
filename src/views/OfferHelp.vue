@@ -29,7 +29,7 @@
     <section class="tasks-sec">
       <basic-loader v-if="showLoader"></basic-loader>
         <div class="tasks-container">
-            <task-card v-for="task in tasks" :key="task.id" :task="task"></task-card>
+            <task-card v-for="task in tasks" :key="task._id" :task="task"></task-card>
         </div>
     </section>
 </template>

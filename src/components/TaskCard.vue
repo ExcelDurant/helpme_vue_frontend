@@ -26,7 +26,7 @@
         </h5>
         <h6 class="date">{{ task.created_on }}</h6>
       </div>
-      <router-link to="/task-details" href="#" class="details-link"
+      <router-link :to="'/task-details/'+ task._id" class="details-link"
         >view details</router-link
       >
     </div>

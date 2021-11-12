@@ -2,7 +2,7 @@
 <basic-loader v-if="showLoader"></basic-loader>
     <section class="tasks-sec"> 
         <div v-if="!showLoader" class="tasks-container">
-            <my-task v-for="task in myTasks" :key="task.id" :task="task"></my-task>
+            <my-task v-for="task in myTasks" :key="task._id" :task="task"></my-task>
         </div>
     </section>
 </template>

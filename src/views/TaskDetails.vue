@@ -1,53 +1,29 @@
 <template>
-    <div class="task-details-page">
+<basic-loader v-if="showLoader"></basic-loader>
+    <div v-if="task" class="task-details-page">
       <div class="page main-page">
         <div class="images-container">
-          <div class="img-container no-overflow">
-            <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
-          </div>
-          <div class="img-container no-overflow">
-            <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
-          </div>
-          <div class="img-container no-overflow">
-            <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
-          </div>
-          <div class="img-container no-overflow">
-            <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
-          </div>
-          <div class="img-container no-overflow">
-            <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
-          </div>
-          <div class="img-container no-overflow">
-            <img src="https://images.unsplash.com/photo-1634227555537-dfedab448cf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=492&q=80" alt="" class="full-img">
+          <div class="img-container no-overflow" v-for="(img, index) in task.pictures" :key="index">
+            <img :src="img" :alt="task.name" class="full-img">
           </div>
         </div>
         <div class="top-row">
-          <h2 class="task-name">Help me repair my home</h2>
+          <h2 class="task-name">{{task.name}}</h2>
           <div class="reward-container flex-center">
-            <h5 class="reward">25000 FCFA</h5>
+            <h5 class="reward">{{task.reward}} FCFA</h5>
           </div>
         </div>
         <div class="desc-container">
           <p class="desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi veritatis quia non dicta a 
-            minus error esse praesentium at est? Nihil consectetur laborum perspiciatis cupiditate 
-            reprehenderit culpa est similique,
-             assumenda, in iste voluptates nemo, ut magni fugit. Fugiat, adipisci sit aliquid 
-             aliquam voluptatem odio dolores sequi iusto est enim rerum, natus magnam fuga facilis 
-             cumque, ullam atque repellendus ipsum rem. Consequatur laboriosam numquam dolorum sit 
-             consectetur? Mollitia error explicabo, corrupti consectetur quaerat numquam eligendi nisi 
-             tempore quis cupiditate! Officia soluta, omnis at, architecto maiores iusto animi doloribus 
-             sed amet porro cum libero qui eligendi rerum temporibus voluptatum, aperiam cupiditate 
-             repellat? Ipsum velit animi dolorum pariatur cum tempora dolorem quis, id dolores 
-             repudiandae exercitationem eveniet reiciendis. Eius, itaque suscipit. Debitis, deserunt.
+            {{task.description}}
           </p>
         </div>
       </div>
       <div class="page info-page">
         <div class="base-info-container flex-justify-down">
-          <h5 class="date"><i class="fas fa-calendar-week blue-icon-bg"></i>October 8, 2021</h5>
+          <h5 class="date"><i class="fas fa-calendar-week blue-icon-bg"></i>{{task.created_on}}</h5>
           <h5 class="location">
-                <i class="fas fa-map-marker blue-icon-bg"></i>Cameroon, Douala, Logpom
+                <i class="fas fa-map-marker blue-icon-bg"></i>{{task.address.country}}, {{task.address.city}}, {{task.address.street}}
             </h5>
             <h3 class="creator">by <span class="creator-name">John Doe</span></h3>
             <h6 class="created-on">created 2 hours ago</h6>
@@ -59,20 +35,64 @@
 
 <script lang="ts">
 import { navbarState } from '@/services/navbar';
-import { defineComponent } from 'vue'
+import { tokenState } from '@/services/token';
+import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
+import { Task } from '../../interfaces/task.interface';
+import BasicLoader from "@/components/BasicLoader.vue";
 
 export default defineComponent({
+  components: {BasicLoader},
         mounted() {
     navbarState.changeTitle(" - Offer Help - Help me reapir my home");
     navbarState.changeAuth(false);
+    this.getTaskDetails(this.id.toString())
     // this.getHelpers();
   },
     setup() {
-        
+        const route = useRoute();  
+        const id = route.params.id;
+        return {
+          id
+        }
+    },
+    data() {
+      return {
+        tokenState:tokenState.state,
+            showLoader:false,
+            task:null
+      }
     },
     methods:{
       offerHelp() {
         this.$router.push('/chat');
+      },
+      getTaskDetails(id:string) {
+        this.showLoader = true;
+      const requestOptions = {
+        method: "GET",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.tokenState.token}`
+         },
+      };
+      fetch("https://pure-archive-330723.uc.r.appspot.com/tasks/"+id, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.statusCode > 299) {
+            this.showLoader = false;
+            window.alert("wrong credentials");
+            console.log(data)
+          } else {
+            this.showLoader = false;
+            this.task = data;
+            console.log(data);
+          }
+        })
+        .catch((err) => {
+          this.showLoader = false;
+          console.error(err);
+        });
       }
     }
 })
