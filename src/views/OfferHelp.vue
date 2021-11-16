@@ -147,4 +147,10 @@ export default defineComponent({
     display: flex;
     flex-wrap: wrap;
 }
+
+@include mqx(800px) {
+.tasks-container {
+    align-items: center;
+}
+}
 </style>

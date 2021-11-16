@@ -288,11 +288,12 @@ export default defineComponent({
 
 .procedure-sec {
   width: 80%;
+  overflow: hidden;
   margin: 0 auto;
 }
 
 .procedures-container {
-  width: 100%;
+  width: 1000px;
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
@@ -483,5 +484,11 @@ export default defineComponent({
     width: 180px;
     align-self: center;
   }
+}
+
+@include mqx(800px) {
+   .form-container {
+     width: 90%;
+   }
 }
 </style>

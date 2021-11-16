@@ -38,10 +38,10 @@
           by <span class="creator-name">{{ user._doc.first_name }}</span>
         </h3>
         <h6 class="created-on">created 2 hours ago</h6>
-        <button @click.prevent="offerHelp()" class="help-btn">
+      </div>
+      <button v-if="!userLoader" @click.prevent="offerHelp()" class="help-btn">
           offer help
         </button>
-      </div>
     </div>
   </div>
 </template>
@@ -168,6 +168,7 @@ export default defineComponent({
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin: 0 auto;
 
   .img-container {
     width: 250px;
@@ -222,7 +223,8 @@ export default defineComponent({
     font-size: 10px;
     color: $gray;
   }
-  .help-btn {
+}
+.help-btn {
     width: 150px;
     color: white;
     padding: 5px 0;
@@ -231,5 +233,36 @@ export default defineComponent({
     background-color: $green;
     border-radius: 20px;
   }
+
+@include mqx(900px) {
+.task-details-page {
+  width: 99%;
+  flex-direction: column;
+}
+ .main-page {
+   width: 100%;
+ }
+
+ .top-row {
+   width: 100%;
+ }
+ .desc-container {
+   width: 100%;
+ }
+ .info-page {
+  margin-left: 0px;
+  margin-bottom: 20px;
+}
+}
+
+@include mqx(700px) {
+  .images-container {
+  width: 80%;
+
+  .img-container {
+    width: 150px;
+    height: 100px;
+  }
+}
 }
 </style>

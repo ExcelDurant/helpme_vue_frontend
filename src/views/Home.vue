@@ -9,8 +9,12 @@
             services or ask for help from those selling their services
           </p>
           <div class="links-container">
-            <router-link to="/ask-for-help" class="home-link">Ask For Help</router-link>
-            <router-link to="/offer-help" class="home-link">Offer Help</router-link>
+            <router-link to="/ask-for-help" class="home-link"
+              >Ask For Help</router-link
+            >
+            <router-link to="/offer-help" class="home-link"
+              >Offer Help</router-link
+            >
           </div>
         </div>
       </div>
@@ -22,7 +26,7 @@
 import { Options, Vue } from "vue-class-component";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import { navbarState } from "@/services/navbar";
-import { userState} from "@/services/user";
+import { userState } from "@/services/user";
 
 @Options({
   components: {
@@ -31,11 +35,11 @@ import { userState} from "@/services/user";
 })
 export default class Home extends Vue {
   data() {
-    return { msg: "", userState:userState.state };
+    return { msg: "", userState: userState.state };
   }
   mounted() {
     let userstate = userState.state;
-    if(userstate.loggedIn) {
+    if (userstate.loggedIn) {
       navbarState.changeAuth(false);
     } else {
       navbarState.changeAuth(true);
@@ -69,7 +73,8 @@ export default class Home extends Vue {
     align-items: center;
 
     .text-container {
-      width: 45%;
+      width: 60%;
+      max-width: 650px;
       border-radius: 35px;
       padding: 15px 100px;
       background-color: rgba(255, 255, 255, 0.849);
@@ -115,6 +120,30 @@ export default class Home extends Vue {
       .links-container > .home-link ~ .home-link {
         background-color: white;
         color: $blue;
+      }
+    }
+
+    @include mqx(1000px) {
+      .text-container {
+        width: 60%;
+      }
+    }
+
+    @include mqx(900px) {
+      .text-container {
+        width: 70%;
+      }
+    }
+
+    @include mqx(700px) {
+      align-items: flex-start;
+      .text-container {
+        width: 100%;
+        padding: 10px 5px;
+        border-radius: 0;
+        .links-container {
+          display: none;
+        }
       }
     }
   }

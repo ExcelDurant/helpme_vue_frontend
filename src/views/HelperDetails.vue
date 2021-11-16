@@ -28,6 +28,9 @@
                 <i class="fas fa-check-circle"></i>verified
               </h6>
             </div>
+            <router-link to="/helper-details" class="select-btn">
+            chat with helper
+          </router-link>
           </div>
         </div>
       </section>
@@ -243,6 +246,7 @@ export default defineComponent({
 }
 .main-info-container {
   display: flex;
+  width: 100%;
   .img-sec {
     width: 100px;
     .img-container {
@@ -256,6 +260,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  text-align: left;
   i {
     margin-right: 5px;
   }
@@ -273,7 +278,7 @@ export default defineComponent({
   }
   .location {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     i {
       color: $blue;
     }
@@ -301,6 +306,15 @@ export default defineComponent({
       }
     }
   }
+  .select-btn {
+      background-color: $green;
+      border-radius: 15px;
+      color: white;
+      border: none;
+      padding: 3px 10px;
+      font-size: 15px;
+      margin-top: 30px;
+    }
 }
 
 .details-txt-sec {
@@ -392,5 +406,18 @@ export default defineComponent({
             font-size: 13px;
         }
     }
+}
+
+@include mqx(900px) {
+  .details-page {
+    width: 95%;
+    flex-direction: column;
+  }
+  .page {
+    width: 100%;
+  }
+  .main-info-container {
+    justify-content: space-between;
+  }
 }
 </style>

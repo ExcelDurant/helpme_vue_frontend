@@ -73,3 +73,19 @@ button {
         color: white;
     }
 }
+
+@mixin mqn($width) {
+    @media only screen and (min-width:$width) {
+        @content;
+    }
+}
+
+@mixin mqx($width) {
+    @media only screen and (max-width:$width) {
+        @content;
+    }
+}
+
+// @include mqx(800px) {
+   
+// }

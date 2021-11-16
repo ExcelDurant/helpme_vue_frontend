@@ -12,6 +12,10 @@
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis asperiores eveniet fuga aliquam quisquam optio magni cumque. Perferendis
                dicta velit blanditiis, iusto consectetur quam obcaecati sequi? Ad in consequatur dolorum quos cumque quod expedita ut ex.
           </p>
+          <div class="mobile-actions-container">
+            <button class="select-btn">select helper</button>
+            <h6 class="timer">10 minutes ago</h6>
+        </div>
           <a href="#" class="reply-link">reply</a>
         </div>
         <div class="actions-container">
@@ -68,7 +72,7 @@
     }
 }
 
-.actions-container {
+.actions-container,.mobile-actions-container {
     margin-left: 100px;
     display: flex;
     flex-direction: column;
@@ -87,6 +91,27 @@
     }
     .timer {
         font-size: 12px;
+    }
+}
+.mobile-actions-container {
+    display: none;
+    margin: 0;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+@include mqx(900px) {
+    .actions-container {
+        margin: 0;
+    }
+}
+@include mqx(700px) {
+    .actions-container {
+        display: none;
+    }
+    .mobile-actions-container {
+        display: flex;
+        align-self: flex-start;
     }
 }
 </style>

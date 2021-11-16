@@ -8,15 +8,14 @@
           <h6 class="reviews"><i class="fas fa-star"></i>4.1/5 (20 reviews)</h6>
           <h5 class="location"><i class="fas fa-map-marker"></i>Logpom, Douala, Cameroon</h5>
           <h5 class="lang"><i class="fas fa-language"></i>English, French</h5>
-          <router-link to="/helper-details" href="#" class="details">view details</router-link>
         </div>
         <div class="actions-container">
           <div class="verified-container">
             <h6 class="verified-txt"><i class="fas fa-check-circle"></i>verified</h6>
           </div>
-          <button class="select-btn">
+          <router-link to="/helper-details" class="select-btn">
             select helper
-          </button>
+          </router-link>
         </div>
       </div>
 </template>
@@ -74,13 +73,12 @@
     .verified-container {
       background-color: #3057b846;
       color: $blue;
-      width: 100px;
-      height: 30px;
       border-radius: 5px;
-      padding-top: 5px;
+      padding: 5px 10px;
       margin-bottom: 20px;
       .verified-txt {
         font-weight: 500;
+        margin: 0;
         i {
           color: $blue;
           margin-right: 5px;
@@ -95,6 +93,12 @@
       padding: 3px 10px;
       font-size: 15px;
     }
+  }
+}
+
+@include mqx(700px) {
+  .helper-card {
+    width: 100%;
   }
 }
 </style>

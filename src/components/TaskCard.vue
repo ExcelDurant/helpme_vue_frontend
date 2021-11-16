@@ -1,5 +1,8 @@
 <template>
-  <div class="task-card no-overflow">
+<!-- <router-link :to="'/task-details/'+ task._id" class="details-link"
+        >view details</router-link
+      > -->
+  <router-link :to="'/task-details/'+ task._id" class="task-card no-overflow">
     <div class="img-container">
       <img :src="task.pictures[0]" :alt="task.name" class="full-img" />
     </div>
@@ -26,11 +29,8 @@
         </h5>
         <h6 class="date">{{ task.created_on }}</h6>
       </div>
-      <router-link :to="'/task-details/'+ task._id" class="details-link"
-        >view details</router-link
-      >
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -58,6 +58,9 @@ export default defineComponent({
   border: 1px solid $darkgray;
   margin-bottom: 40px;
   margin-right: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  color: rgb(48, 48, 48);
 }
 
 .img-container {
@@ -132,5 +135,26 @@ export default defineComponent({
 }
 .details-link {
   align-self: flex-start;
+}
+
+@include mqx(980px) {
+  .task-card {
+    border: none;
+    align-self: center;
+    // padding: 1px;
+    box-shadow: 2px 2px 10px 2px rgb(196, 194, 194);
+    border-radius: 10px;
+    width: 300px;
+  }
+  .details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+.bottom-row {
+  .location {
+    font-size: 8px;
+  }
+}
 }
 </style>

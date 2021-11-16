@@ -213,4 +213,16 @@ export default defineComponent({
     }
   }
 }
+
+@include mqx(900px) {
+  .become-helper-page {
+    width: 95%;
+  }
+  .form-page {
+    width: 100%;
+  }
+  .timeline-page {
+    display: none;
+  }
+}
 </style>

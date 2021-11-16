@@ -231,4 +231,10 @@ export default defineComponent({
 .login-txt {
   margin-bottom: 5px;
 }
+
+@include mqx(800px) {
+   .form-container {
+     width: 90%;
+   }
+}
 </style>

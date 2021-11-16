@@ -145,4 +145,10 @@ export default defineComponent({
     background-color: $slightBlue;
   }
 }
+
+@include mqx(800px) {
+   .form-container {
+     width: 90%;
+   }
+}
 </style>
