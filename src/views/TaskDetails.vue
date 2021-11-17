@@ -1,5 +1,6 @@
 <template>
   <basic-loader v-if="showLoader"></basic-loader>
+  <proposal-pop v-if="showProsal" v-on:closePop="closePop()"></proposal-pop>
   <div v-if="task" class="task-details-page">
     <div class="page main-page">
       <div class="images-container">
@@ -53,11 +54,11 @@ import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import { Task } from "../../interfaces/task.interface";
 import BasicLoader from "@/components/BasicLoader.vue";
+import ProposalPop from "@/components/ProposalPop.vue";
 
 export default defineComponent({
-  components: { BasicLoader },
+  components: { BasicLoader, ProposalPop},
   mounted() {
-    navbarState.changeTitle(" - Offer Help - Help me reapir my home");
     navbarState.changeAuth(false);
     this.getTaskDetails(this.id.toString());
     // this.getHelpers();
@@ -76,11 +77,15 @@ export default defineComponent({
       userLoader: false,
       task: null,
       user: null,
+      showProsal:false
     };
   },
   methods: {
     offerHelp() {
-      this.$router.push("/chat");
+      this.showProsal = true;
+    },
+    closePop() {
+      this.showProsal = false;
     },
     getTaskDetails(id: string) {
       this.showLoader = true;
@@ -106,6 +111,7 @@ export default defineComponent({
             this.task = data;
             this.getTaskCreator(data);
             console.log(data);
+            navbarState.changeTitle(" - Offer Help - "+data.name);
           }
         })
         .catch((err) => {

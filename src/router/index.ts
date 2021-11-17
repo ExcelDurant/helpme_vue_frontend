@@ -39,24 +39,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/ask-for-help',
     name: 'AskHelp',
-    component: () => import('../views/AskHelp.vue')
+    component: () => import(/* webpackChunkName: "AskHelp" */'../views/AskHelp.vue')
   },
   {
     path: '/helper-details',
     name: 'HelperDetails',
-    component: () => import('../views/HelperDetails.vue'),
+    component: () => import(/* webpackChunkName: "HelperDetails" */'../views/HelperDetails.vue'),
     meta:{requiresAuth:true}
   },
   {
     path: '/create-task',
     name: 'CreateTask',
-    component: () => import('../views/CreateTask.vue'),
+    component: () => import(/* webpackChunkName: "CreateTask" */'../views/CreateTask.vue'),
     meta:{requiresAuth:true}
   },
   {
     path: '/my-tasks',
     name: 'MyTasks',
-    component: () => import('../views/MyTasks.vue'),
+    component: () => import(/* webpackChunkName: "MyTasks" */'../views/MyTasks.vue'),
     meta:{requiresAuth:true}
   },
   {
