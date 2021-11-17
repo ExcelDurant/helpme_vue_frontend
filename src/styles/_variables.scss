@@ -11,6 +11,11 @@ $lightGray:#D9D9D9;
 $blue-border: 1px solid $blue;
 $black-border: 1px solid black;
 
+p {
+    margin: 0;
+    padding: 0;
+}
+
 .flex-center {
     display: flex;
     align-items: center;
@@ -30,12 +35,24 @@ $black-border: 1px solid black;
     overflow: hidden;
 }
 
+.rounded {
+    border-radius: 50%;
+}
+
 i {
     display: inline-block;
 }
 
 button {
     border: none;
+}
+
+.divider {
+    width: 110%;
+    margin-left: -10px;
+    margin-bottom: 10px;
+    height: 1px;
+    background-color: $gray;
 }
 
 .yellow-icon-bg {
@@ -73,6 +90,10 @@ button {
         color: white;
     }
 }
+
+input[type="file"] {
+    display: none;
+  }
 
 @mixin mqn($width) {
     @media only screen and (min-width:$width) {

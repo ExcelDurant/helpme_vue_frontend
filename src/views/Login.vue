@@ -45,7 +45,7 @@ export default defineComponent({
     navbarState.changeTitle(" - Login");
     console.log(userState.state.loggedIn);
     if(userState.state.loggedIn) {
-      this.$router.push('/welcome');
+      this.$router.push('/profile');
     }
   },
 
@@ -81,7 +81,7 @@ export default defineComponent({
             userState.setAuth(true);
             tokenState.setToken(data.access_token);
             userState.setUser(data.user);
-            this.$router.push('/welcome');
+            this.$router.push('/profile');
           }
         })
         .catch((err) => {

@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/welcome',
+    path: '/profile',
     name: 'Welcome',
     component: () => import('../views/Welcome.vue'),
     meta:{requiresAuth:true}

@@ -13,23 +13,76 @@
         <li v-if="navState.showAuth">
           <router-link to="/signup" class="navlink signup">signup</router-link>
         </li>
-        <li v-if="userState.loggedIn" @click="logout()">
-          <router-link to="/" class="navlink">logout</router-link>
-        </li>
       </ul>
+      <div class="profile-container" v-if="userState.loggedIn">
+        <div class="chat-icon-container">
+          <router-link to="/chat" class="dropdown-link"
+            ><i class="fas fa-comments"></i
+          ></router-link>
+        </div>
+        <div class="notification-icon-container">
+          <router-link to="/notifications" class="dropdown-link"
+            ><i class="fas fa-bell"></i
+          ></router-link>
+        </div>
+        <router-link
+                to="/profile" class="user-avatar-container no-overflow">
+          <img :src="user.photoUrl" alt="" class="full-img" />
+        </router-link>
+        <div class="dropdown-arrow-container">
+          <button class="drop-btn" @click="dropDown()">
+            <i
+              class="fas fa-chevron-down"
+              :class="{ rotate: showDropdown }"
+            ></i>
+          </button>
+        </div>
+        <div class="profile-dropdown-container" :class="{ drop: showDropdown }">
+          <ul class="dropdown-list">
+            <li>
+              <router-link
+                to="/profile"
+                @click="dropDown()"
+                class="dropdown-link"
+                >profile</router-link
+              >
+            </li>
+            <div class="divider"></div>
+            <li>
+              <router-link
+                to="/create-task"
+                @click="dropDown()"
+                class="dropdown-link"
+                >create a task</router-link
+              >
+            </li>
+            <div class="divider"></div>
+            <li>
+              <router-link
+                to="/my-tasks"
+                @click="dropDown()"
+                class="dropdown-link"
+                >my tasks</router-link
+              >
+            </li>
+            <div class="divider"></div>
+            <li><a @click="logout()" class="dropdown-link">logout</a></li>
+          </ul>
+        </div>
+      </div>
     </nav>
   </header>
   <div class="mobile-overlay-nav" :class="{ mobile: showMobileMenu }">
     <div class="close-container nav-row">
-      <button class="close-btn" @click="closeNav()"><i class="far fa-window-close"></i></button>
+      <button class="close-btn" @click="closeNav()">
+        <i class="far fa-window-close"></i>
+      </button>
     </div>
     <div class="main-links-container nav-row">
       <router-link to="/ask-for-help" class="ask-link"
-              >Ask For Help</router-link
-            >
-      <router-link to="/offer-help" class="help-link"
-              >Offer Help</router-link
-            >
+        >Ask For Help</router-link
+      >
+      <router-link to="/offer-help" class="help-link">Offer Help</router-link>
     </div>
     <div class="links-list-container nav-row">
       <ul class="links-list">
@@ -55,7 +108,15 @@
           <router-link to="/my-tasks" class="link">my tasks</router-link>
         </li>
         <li v-if="userState.loggedIn">
-          <router-link to="/create-task" class="link">create a task</router-link>
+          <router-link to="/create-task" class="link"
+            >create a task</router-link
+          >
+        </li>
+      </ul>
+      <div class="divider" v-if="userState.loggedIn"></div>
+      <ul class="links-list">
+        <li v-if="userState.loggedIn">
+          <a @click="logout()" class="link">logout</a>
         </li>
       </ul>
     </div>
@@ -64,7 +125,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { defineComponent } from "vue";
+import { defineComponent, toRefs } from "vue";
 import { navbarState } from "@/services/navbar";
 import { userState } from "@/services/user";
 import { User } from "interfaces/user.interface";
@@ -72,11 +133,18 @@ import { tokenState } from "@/services/token";
 
 // @Options({})
 export default defineComponent({
+  setup() {
+    let { user } = toRefs(userState.state);
+    return {
+      user,
+    };
+  },
   data() {
     return {
       navState: navbarState.state,
       userState: userState.state,
-      showMobileMenu: false
+      showMobileMenu: false,
+      showDropdown: false,
     };
   },
   methods: {
@@ -85,15 +153,22 @@ export default defineComponent({
       userState.setUser({} as User);
       userState.setAuth(false);
       tokenState.setToken("");
-      this.$router.push('/');
+      this.$router.push("/");
+      navbarState.changeAuth(true);
     },
     openNav() {
-        this.showMobileMenu = true;
-        console.log(this.showMobileMenu);
+      this.showMobileMenu = true;
+      console.log(this.showMobileMenu);
     },
     closeNav() {
-        this.showMobileMenu = false;
-    }
+      this.showMobileMenu = false;
+    },
+    dropDown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    dropUp() {
+      this.showDropdown = false;
+    },
   },
 });
 </script>
@@ -133,10 +208,10 @@ export default defineComponent({
     display: none;
   }
   @include mqx(900px) {
-            .extra {
-              display: none;
-            }
-        }
+    .extra {
+      display: none;
+    }
+  }
 }
 
 .navlist {
@@ -159,6 +234,75 @@ export default defineComponent({
     }
   }
 }
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  i {
+    font-size: 22px;
+    margin-left: 5px;
+    color: rgb(27, 27, 27);
+  }
+  .user-avatar-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 25px;
+  }
+  .dropdown-arrow-container {
+    i {
+      font-size: 18px;
+      color: $gray;
+    }
+    .drop-btn {
+      background-color: transparent;
+    }
+    .rotate {
+      transform: rotate(180deg);
+    }
+    @include mqx(700px) {
+    display: none;
+  }
+  }
+
+  .profile-dropdown-container {
+    position: absolute;
+    overflow: hidden;
+    width: 200px;
+    height: 0;
+    background-color: white;
+    box-shadow: 2px 2px 10px 1px rgb(206, 206, 206);
+    margin-top: 5px;
+    top: 100%;
+    left: -40%;
+    transition: 0.5s;
+    .dropdown-list {
+      margin-top: 10px;
+      text-align: left;
+      padding: 0;
+      padding-left: 5px;
+      .divider {
+        background-color: rgb(175, 175, 175);
+      }
+      .dropdown-link {
+        color: $gray;
+        margin-bottom: 5px;
+        &:hover {
+          color: black;
+        }
+      }
+    }
+    @include mqx(700px) {
+    display: none;
+  }
+  }
+  .drop {
+    height: inherit;
+  }
+
+}
+
 .dropdown {
   position: relative;
 }
@@ -182,10 +326,10 @@ export default defineComponent({
     width: 100px;
     align-self: flex-end;
     .close-btn {
-        padding: 2px;
-        font-size: 30px;
-        color: $gray;
-        background-color: transparent;
+      padding: 2px;
+      font-size: 30px;
+      color: $gray;
+      background-color: transparent;
     }
   }
   .main-links-container {
@@ -209,33 +353,26 @@ export default defineComponent({
     flex-direction: column;
     align-items: flex-start;
     margin-left: 10px;
-    .divider {
-        width: 110%;
-        margin-left: -10px;
-        margin-bottom: 10px;
-        height: 1px;
-        background-color: $gray;
-    }
     ul {
-        margin: 0;
-        padding-bottom: 5px;
-        text-align: left;
+      margin: 0;
+      padding-bottom: 5px;
+      text-align: left;
       li {
-          margin-left: -30px;
-          margin-bottom: 5px;
+        margin-left: -30px;
+        margin-bottom: 5px;
       }
     }
     .link {
-        color: $gray;
-        font-weight: 500;
+      color: $gray;
+      font-weight: 500;
     }
   }
   @include mqx(700px) {
-            display: flex;
-        }
+    display: flex;
+  }
 }
 .mobile {
-    width: 90%;
+  width: 90%;
 }
 
 @include mqx(700px) {

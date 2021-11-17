@@ -126,7 +126,7 @@ export default defineComponent({
           userState.setUser(data.user);
           userState.setAuth(true);
           tokenState.setToken(data.access_token);
-          this.$router.push('/welcome');
+          this.$router.push('/profile');
         })
         .catch((err) => {
           this.showLoader = false;
